@@ -4,6 +4,14 @@
                       transaction-type="RESOURCE_LOCAL">
         <class>entities.TypeUser</class>
         <class>entities.UserFreelance</class>
+        <class>entities.ProgrammingLanguage</class>
+        <class>entities.StatusProject</class>
+        <class>entities.TypePayment</class>
+        <class>entities.Project</class>
+        <class>entities.Commentary</class>
+        <class>entities.CommentaryUser</class>
+        <class>entities.Offer</class>
+        <class>entities.OffersProject</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.14:3306/FreelanceMx?autoReconnect=true&amp;useSSL=false"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

@@ -1,17 +1,17 @@
 package repositories;
 
 import bases.RepositoryBase;
-import entities.UserFreelance;
+import entities.ProgrammingLanguage;
 import interfaces.RepositoryApi;
 
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserFreelanceRepository extends RepositoryBase implements RepositoryApi<UserFreelance> {
+public class ProgrammingLanguageRepository extends RepositoryBase implements RepositoryApi<ProgrammingLanguage> {
 
     @Override
-    public boolean insertItem(UserFreelance item) {
+    public boolean insertItem(ProgrammingLanguage item) {
         try{
             return executeInsideTransaction(entityManager -> entityManager.persist(item));
         }catch (Exception ex){
@@ -21,10 +21,9 @@ public class UserFreelanceRepository extends RepositoryBase implements Repositor
     }
 
     @Override
-    public boolean deleteItem(int id)
-    {
+    public boolean deleteItem(int id) {
         try{
-            UserFreelance item = entityManager.find(UserFreelance.class, id);
+            ProgrammingLanguage item = entityManager.find(ProgrammingLanguage.class, id);
             entityManager.getTransaction().begin();
             entityManager.remove(item);
             entityManager.getTransaction().commit();
@@ -37,7 +36,7 @@ public class UserFreelanceRepository extends RepositoryBase implements Repositor
     }
 
     @Override
-    public  boolean updateItem(UserFreelance item){
+    public boolean updateItem(ProgrammingLanguage item) {
         try{
             entityManager.getTransaction().begin();
             entityManager.merge(item);
@@ -51,13 +50,12 @@ public class UserFreelanceRepository extends RepositoryBase implements Repositor
     }
 
     @Override
-    public List<UserFreelance> getAllItems()
-    {
-        List<UserFreelance> items = new ArrayList<>();
+    public List<ProgrammingLanguage> getAllItems() {
+        List<ProgrammingLanguage> items = new ArrayList<>();
         try{
             entityManager.clear();
             entityManager.getTransaction().begin();
-            TypedQuery<UserFreelance> query = entityManager.createQuery("SELECT a FROM UserFreelance a",UserFreelance.class);
+            TypedQuery<ProgrammingLanguage> query = entityManager.createQuery("SELECT a FROM  ProgrammingLanguage a",ProgrammingLanguage.class);
             items = query.getResultList();
             entityManager.getTransaction().commit();
         }catch (Exception ex)
@@ -68,9 +66,9 @@ public class UserFreelanceRepository extends RepositoryBase implements Repositor
     }
 
     @Override
-    public UserFreelance getItemById(int id){
+    public ProgrammingLanguage getItemById(int id) {
         try{
-            return entityManager.find(UserFreelance.class, id);
+            return entityManager.find(ProgrammingLanguage.class, id);
         }catch (Exception ex) {
             ex.printStackTrace();
             return null;
@@ -78,18 +76,18 @@ public class UserFreelanceRepository extends RepositoryBase implements Repositor
     }
 
     @Override
-    public List<UserFreelance> getWhereItems(int max, String where, String order) {
-        List<UserFreelance> items = new ArrayList<>();
+    public List<ProgrammingLanguage> getWhereItems(int max, String where, String order) {
+        List<ProgrammingLanguage> items = new ArrayList<>();
         String w;
         if(order == null){
-            w = String.format("SELECT a FROM  UserFreelance a WHERE %s",where);
+            w = String.format("SELECT a FROM  ProgrammingLanguage a WHERE %s",where);
         }else{
-            w = String.format("SELECT a FROM  UserFreelance a WHERE %s ORDER BY %s",where,order);
+            w = String.format("SELECT a FROM  ProgrammingLanguage a WHERE %s ORDER BY %s",where,order);
         }
         try{
             entityManager.clear();
             entityManager.getTransaction().begin();
-            TypedQuery<UserFreelance> query= entityManager.createQuery(w,UserFreelance.class).setMaxResults(max);
+            TypedQuery<ProgrammingLanguage> query= entityManager.createQuery(w,ProgrammingLanguage.class).setMaxResults(max);
             items = query.getResultList();
             entityManager.getTransaction().commit();
         }catch (Exception ex)

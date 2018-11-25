@@ -80,10 +80,15 @@ public class TypeUserRepository extends RepositoryBase implements RepositoryApi<
     @Override
     public List<TypeUser> getWhereItems(int max, String where, String order) {
         List<TypeUser> items = new ArrayList<>();
+        String w;
+        if(order == null){
+            w = String.format("SELECT a FROM  UserFreelance a WHERE %s",where);
+        }else{
+            w = String.format("SELECT a FROM  UserFreelance a WHERE %s ORDER BY %s",where,order);
+        }
         try{
             entityManager.clear();
             entityManager.getTransaction().begin();
-            String w = String.format("SELECT a FROM  TypeUser a WHERE %s ORDER BY %s",where,order);
             TypedQuery<TypeUser> query= entityManager.createQuery(w,TypeUser.class).setMaxResults(max);
             items = query.getResultList();
             entityManager.getTransaction().commit();

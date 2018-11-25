@@ -1,3 +1,5 @@
+import endpoints.ProgrammingLanguageEndPoint;
+import endpoints.StatusProjectEndPoint;
 import endpoints.TypeUserEndPoint;
 import endpoints.UserFreelanceEndPoint;
 
@@ -13,6 +15,8 @@ public class FreelanceMxApplication extends Application {
         HashSet h = new HashSet<Class<?>>();
         h.add(TypeUserEndPoint.class);
         h.add(UserFreelanceEndPoint.class);
+        h.add(ProgrammingLanguageEndPoint.class);
+        h.add(StatusProjectEndPoint.class);
         return h;
     }
 }
