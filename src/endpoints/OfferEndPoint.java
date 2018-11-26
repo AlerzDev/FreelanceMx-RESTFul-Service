@@ -2,6 +2,7 @@ package endpoints;
 
 import bases.EndPointBase;
 import entities.Offer;
+import entities.OffersProject;
 import interfaces.EndPointApi;
 import repositories.OfferRepository;
 import repositories.OffersProjectRepository;
@@ -24,13 +25,21 @@ public class OfferEndPoint extends EndPointBase<Offer> implements EndPointApi<Of
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/insert")
-    @Override
-    public Response newItem(Offer item) {
+    public Response newItem(@QueryParam("idProject") int project,Offer item) {
         try {
-            return generateResponse(servicesOffer.insertItem(item));
+            long idOffer = servicesOffer.insertItemGetId(item);
+            OffersProject i = new OffersProject();
+            i.setIdOffer(idOffer);
+            i.setIdProject(project);
+            return generateResponse(servicesOffersProject.insertItem(i));
         } catch (Exception ex) {
             return generateResponse(ex.getMessage());
         }
+    }
+
+    @Override
+    public Response newItem(Offer item) {
+        return null;
     }
 
     @PUT
@@ -88,6 +97,18 @@ public class OfferEndPoint extends EndPointBase<Offer> implements EndPointApi<Of
     public Response getItemById(@PathParam("id")int id) {
         try{
             return generateReponse(servicesOffer.getItemById(id));
+        }catch (Exception ex){
+            return generateResponse(ex.getMessage());
+        }
+    }
+
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/get-offer-project")
+    public Response getOfferProject(@QueryParam("max") int max ,@QueryParam("where") String where, @QueryParam("orderBy") String orderBy) {
+        try{
+            return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").entity(servicesOffersProject.getWhereItems(max,where,orderBy)).build();
         }catch (Exception ex){
             return generateResponse(ex.getMessage());
         }

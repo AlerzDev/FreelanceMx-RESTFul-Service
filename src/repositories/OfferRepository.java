@@ -21,6 +21,17 @@ public class OfferRepository extends RepositoryBase implements RepositoryApi<Off
         }
     }
 
+    public long insertItemGetId(Offer item){
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(item);
+            entityManager.getTransaction().commit();
+            return item.getId();
+        }catch (Exception ex){
+            return  0;
+        }
+    }
+
     @Override
     public boolean deleteItem(int id) {
         try{
@@ -68,7 +79,12 @@ public class OfferRepository extends RepositoryBase implements RepositoryApi<Off
 
     @Override
     public Offer getItemById(int id) {
-        return null;
+        try{
+            return entityManager.find(Offer.class, id);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override

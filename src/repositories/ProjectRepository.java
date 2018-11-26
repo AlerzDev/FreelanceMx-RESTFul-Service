@@ -20,6 +20,17 @@ public class ProjectRepository extends RepositoryBase implements RepositoryApi<P
         }
     }
 
+    public long insertItemGetId(Project item){
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(item);
+            entityManager.getTransaction().commit();
+            return item.getId();
+        }catch (Exception ex){
+            return  0;
+        }
+    }
+
     @Override
     public boolean deleteItem(int id) {
         try{
@@ -67,6 +78,14 @@ public class ProjectRepository extends RepositoryBase implements RepositoryApi<P
 
     @Override
     public Project getItemById(int id) {
+        try{
+            return entityManager.find(Project.class, id);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    public Project getItemById(long id) {
         try{
             return entityManager.find(Project.class, id);
         }catch (Exception ex) {

@@ -13,28 +13,32 @@ public class EndPointBase <T> {
         response = new ResponseApiModel();
         response.setSuccess(success);
         if (!success) response.setReason("Error db");
-        return Response.status(Response.Status.OK).entity(response).build();
+        return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").entity(response).build();
     }
 
     protected Response generateResponse(String reason){
         response = new ResponseApiModel();
         response.setReason(reason);
         response.setSuccess(false);
-        return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
+        return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").entity(response).build();
     }
 
     protected  Response generateReponse(T item){
         response = new ResponseApiModel<>();
         response.setSuccess(true);
         response.setItem(item);
-        return Response.status(Response.Status.OK).entity(response).build();
+        return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").entity(response).build();
     }
 
     protected Response generateReponse(List<T> items){
         response = new ResponseApiModel<>();
         response.setSuccess(true);
         response.setItems(items);
-        return Response.status(Response.Status.OK).entity(response).build();
+        return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").entity(response).build();
     }
 
 }

@@ -5,6 +5,7 @@ import entities.UserProject;
 import interfaces.RepositoryApi;
 
 import javax.persistence.TypedQuery;
+import javax.xml.registry.infomodel.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,23 @@ public class UserProjectRepository extends RepositoryBase implements RepositoryA
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public UserProject getUserProject(int id) {
+        List<UserProject> items = new ArrayList<>();
+        UserProject item = new UserProject();
+        try{
+            entityManager.clear();
+            entityManager.getTransaction().begin();
+            TypedQuery<UserProject> query = entityManager.createQuery("SELECT a FROM  UserProject a where a.idProject = :id",UserProject.class).setParameter("id",id);
+            items = query.getResultList();
+            item = items.get(0);
+            entityManager.getTransaction().commit();
+        }catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return  item;
     }
 
     @Override
